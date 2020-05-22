@@ -16,24 +16,24 @@ package com.kfgs.kpmanage.entity;
 * @author lsy
 */
     @Data
-        @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode(callSuper = false)
     @Accessors(chain = true)
     @TableName("GRADE_SCORES")
     @ApiModel(value="GradeScores对象", description="")
     public class GradeScores extends Model<GradeScores> {
 
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-        @TableField("EXA_ID")
+    @TableField("EXA_ID")
     private String exaId;
 
-        @TableField("EXAMINER")
+    @TableField("EXAMINER")
     private String examiner;
 
-        @TableField("SCORE")
+    @TableField("SCORE")
     private String score;
 
-        @TableField("CANDIDATE")
+    @TableField("CANDIDATE")
     private String candidate;
 
 

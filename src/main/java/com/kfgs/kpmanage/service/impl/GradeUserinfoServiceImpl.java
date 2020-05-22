@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
  * @author lsy
  */
 @Service
-public class GradeUserinfoServiceImpl extends ServiceImpl<GradeUserinfoMapper, GradeUserinfo> implements GradeUserinfoService {
+public class GradeUserinfoServiceImpl implements GradeUserinfoService {
 
 }

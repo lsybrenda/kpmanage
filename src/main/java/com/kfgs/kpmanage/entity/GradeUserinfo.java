@@ -24,34 +24,25 @@ package com.kfgs.kpmanage.entity;
 
 private static final long serialVersionUID = 1L;
 
-            @ApiModelProperty(value = "K0001")
-        @TableField("ID")
+    @TableField("ID")
     private String id;
 
-            @ApiModelProperty(value = "张三、李四")
-        @TableField("NAME")
+    @TableField("NAME")
     private String name;
 
-            @ApiModelProperty(value = "zhangsan@cnipa.gov.cn")
-        @TableField("EMAIL")
+    @TableField("EMAIL")
     private String email;
 
-            @ApiModelProperty(value = "总经理
-,部副主任
-")
-        @TableField("POSITION")
+    @TableField("POSITION")
     private String position;
 
-            @ApiModelProperty(value = "综合管理部、IT事业部")
-        @TableField("DEPARTMENT")
+    @TableField("DEPARTMENT")
     private String department;
 
-            @ApiModelProperty(value = "是否参与打分")
-        @TableField("ISDAFEN")
+    @TableField("ISDAFEN")
     private String isdafen;
 
-            @ApiModelProperty(value = "入职时间")
-        @TableField("HIREDATE")
+    @TableField("HIREDATE")
     private String hiredate;
 
 

@@ -6,6 +6,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 /**
  * @author lsy
  */
-public interface GradeTotalsService extends IService<GradeTotals> {
+public interface GradeTotalsService {
 
 }

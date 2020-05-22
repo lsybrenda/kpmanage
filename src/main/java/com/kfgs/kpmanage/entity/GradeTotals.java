@@ -24,28 +24,28 @@ package com.kfgs.kpmanage.entity;
 
 private static final long serialVersionUID = 1L;
 
-            @ApiModelProperty(value = "考生")
-        @TableField("CANDIDATE")
+    @ApiModelProperty(value = "考生")
+    @TableField("CANDIDATE")
     private String candidate;
 
-            @ApiModelProperty(value = "固定部分得分")
-        @TableField("REGULAR")
+    @ApiModelProperty(value = "固定部分得分")
+    @TableField("REGULAR")
     private String regular;
 
-            @ApiModelProperty(value = "个人部分得分")
-        @TableField("PERSONAL")
+    @ApiModelProperty(value = "个人部分得分")
+    @TableField("PERSONAL")
     private String personal;
 
-            @ApiModelProperty(value = "个人总得分")
-        @TableField("TOTAL")
+    @ApiModelProperty(value = "个人总得分")
+    @TableField("TOTAL")
     private String total;
 
-            @ApiModelProperty(value = "考核类型")
-        @TableField("TYPE")
+    @ApiModelProperty(value = "考核类型")
+    @TableField("TYPE")
     private String type;
 
-            @ApiModelProperty(value = "考官")
-        @TableField("EXAMINER")
+    @ApiModelProperty(value = "考官")
+    @TableField("EXAMINER")
     private String examiner;
 
 

@@ -53,12 +53,6 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-        <!--<dependency>
-            <groupId>uk.co.deloittedigital.opensource</groupId>
-            <artifactId>simple-parent-pom</artifactId>
-            <version>1.0.1</version>
-            <type>pom</type>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
