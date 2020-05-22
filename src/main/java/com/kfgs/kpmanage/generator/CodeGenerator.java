@@ -62,11 +62,6 @@ public class CodeGenerator {
         PackageConfig pc = new PackageConfig();
         pc.setModuleName("");
         pc.setParent("com.kfgs.kpmanage");
-        /*pc.setController("controller");
-        pc.setService("service");
-        pc.setServiceImpl("service.impl");
-        pc.setMapper("mapper");
-        pc.setEntity("entity");*/
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -93,7 +88,7 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setInclude("表名");
+        strategy.setInclude(scanner("表名"));
         //strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
         //strategy.setTablePrefix(packageConfig.getModuleName() + "_");
