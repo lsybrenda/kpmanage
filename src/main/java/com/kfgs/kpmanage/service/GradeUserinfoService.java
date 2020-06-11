@@ -15,9 +15,12 @@ public interface GradeUserinfoService {
     IPage findAllUsers(String name,String pageNo, String limit);
 
     //更新人员信息
-    int updateUserInfo(String id,String name,String position,String department);
+    int updateUserInfo(String id,String name,String email,String position,String department,String isdafen);
 
     //删除人员信息
     int deleteUserInfo(String ids);
+
+    //新增单个人员信息
+    void addUserInfo(String id,String name,String email,String position,String department,String isdafen);
 
 }

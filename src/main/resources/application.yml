@@ -15,3 +15,27 @@ spring:
     testOnReturn: false #归还连接时检测连接是否有效
     timeBetweenEvictionRunsMillis: 60000 #配置间隔检测连接是否有效的时间（单位是毫秒）
     minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（毫秒）
+
+mybatis-plus:
+  type-aliases-package: com.kfgs.kpmanage.entity
+  mapper-locations: classpath*:mapper/*.xml
+  global-config:
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  redis:
+#    #host: 192.168.1.103
+#    #host: 192.168.8.107
+#    host: 172.17.1.56
+#    #host: 10.75.109.128
+#    #host: 127.0.0.1
+#    port: 6379
+#    password:
+#    jedis:
+#      pool:
+#        min-idle: 8
+#        max-idle: 500
+#        max-active: 2000
+#        max-wait: 10000
+#    timeout: 0

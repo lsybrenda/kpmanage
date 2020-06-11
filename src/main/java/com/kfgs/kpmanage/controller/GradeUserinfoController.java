@@ -1,6 +1,7 @@
 package com.kfgs.kpmanage.controller;
 
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.kfgs.kpmanage.common.controller.BaseController;
 import com.kfgs.kpmanage.service.GradeUserinfoService;
 import io.swagger.annotations.ApiOperation;
@@ -41,8 +42,8 @@ public class GradeUserinfoController extends BaseController {
 
     @ApiOperation("编辑人员信息")
     @GetMapping("/updateUserInfo")
-    public int updateUserInfo(String id,String name,String position,String department){
-        int returnbak = gradeUserinfoService.updateUserInfo(id,name,position,department);
+    public int updateUserInfo(String id,String name,String email,String position,String department,String isdafen){
+        int returnbak = gradeUserinfoService.updateUserInfo(id,name,email,position,department,isdafen);
         return returnbak;
     }
 
@@ -52,4 +53,25 @@ public class GradeUserinfoController extends BaseController {
         int returnbak = gradeUserinfoService.deleteUserInfo(ids);
         return returnbak;
     }
+
+    @ApiOperation("新增单个人员信息")
+    @GetMapping("/addUserInfo")
+    public void addUserInfo(String id,String name,String email,String position,String department,String isdafen){
+        if(email == null){
+            email = "";
+        }
+        if(position == null){
+            position = "";
+        }
+        if(department == null){
+            department = "";
+        }
+        try {
+            gradeUserinfoService.addUserInfo(id,name,email,position,department,isdafen);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
+
+    }
+
 }

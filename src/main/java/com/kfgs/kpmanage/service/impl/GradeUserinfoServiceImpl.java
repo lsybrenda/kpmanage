@@ -38,7 +38,7 @@ public class GradeUserinfoServiceImpl implements GradeUserinfoService {
 
     //更新人员信息
     @Override
-    public int updateUserInfo(String id,String name,String position,String department){
+    public int updateUserInfo(String id,String name,String email,String position,String department,String isdafen){
         GradeUserinfo gradeUserinfo = new GradeUserinfo();
         QueryWrapper queryWrapper = new QueryWrapper();
         if (id != null && id != ""){
@@ -47,8 +47,10 @@ public class GradeUserinfoServiceImpl implements GradeUserinfoService {
         }
         //name不为空
         gradeUserinfo.setName(name);
+        gradeUserinfo.setEmail(email);
         gradeUserinfo.setPosition(position);
         gradeUserinfo.setDepartment(department);
+        gradeUserinfo.setIsdafen(isdafen);
         int returnbak = gradeUserinfoMapper.update(gradeUserinfo,queryWrapper);
         return returnbak;
     }
@@ -63,5 +65,20 @@ public class GradeUserinfoServiceImpl implements GradeUserinfoService {
             returnbak = gradeUserinfoMapper.deleteById(idlist[i]);
         }
         return returnbak;
+    }
+
+    //新增单个人员信息
+    @Override
+    public void addUserInfo(String id,String name,String email,String position,String department,String isdafen){
+        GradeUserinfo gradeUserinfo = new GradeUserinfo();
+        QueryWrapper queryWrapper = new QueryWrapper();
+        gradeUserinfo.setId(id);
+        gradeUserinfo.setName(name);
+        gradeUserinfo.setEmail(email);
+        gradeUserinfo.setPosition(position);
+        gradeUserinfo.setDepartment(department);
+        gradeUserinfo.setIsdafen(isdafen);
+        gradeUserinfo.setHiredate("");
+        gradeUserinfoMapper.insert(gradeUserinfo);
     }
 }

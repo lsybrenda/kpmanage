@@ -1,6 +1,6 @@
 package com.kfgs.kpmanage.entity;
 
-    import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableName;
     import com.baomidou.mybatisplus.extension.activerecord.Model;
     import com.baomidou.mybatisplus.annotation.TableField;
     import java.io.Serializable;
@@ -16,13 +16,13 @@ package com.kfgs.kpmanage.entity;
 * @author lsy
 */
     @Data
-        @EqualsAndHashCode(callSuper = false)
+    @EqualsAndHashCode(callSuper = false)
     @Accessors(chain = true)
     @TableName("GRADE_USERINFO")
-    @ApiModel(value="GradeUserinfo对象", description="")
+    @ApiModel(value="GradeUserinfo对象", description="人员信息")
     public class GradeUserinfo extends Model<GradeUserinfo> {
 
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @TableField("ID")
     private String id;
