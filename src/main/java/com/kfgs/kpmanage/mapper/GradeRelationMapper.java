@@ -11,4 +11,5 @@ public interface GradeRelationMapper extends BaseMapper<GradeRelation> {
 
     IPage<GradeRelation> getRelationList(IPage<GradeRelation> page);
 
+    int updateRelation(String examiner,String candidate,String type,String groups);
 }

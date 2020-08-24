@@ -3,6 +3,7 @@ package com.kfgs.kpmanage.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.kfgs.kpmanage.entity.GradeUserinfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,5 +23,8 @@ public interface GradeUserinfoService {
 
     //新增单个人员信息
     void addUserInfo(String id,String name,String email,String position,String department,String isdafen);
+
+    //导入Excel
+    int batchImport(MultipartFile file) throws Exception;
 
 }

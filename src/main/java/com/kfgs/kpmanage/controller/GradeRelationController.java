@@ -35,4 +35,11 @@ public class GradeRelationController extends BaseController {
         resultMap.put("code",20000);
         return resultMap;
     }
+
+    @ApiOperation("更新打分关系")
+    @GetMapping("/updateRelation")
+    public int updateRelation(String examiner,String candidate,String type,String groups){
+        int returnbak = gradeRelationService.updateRelation(examiner,candidate,type,groups);
+        return returnbak;
+    }
 }

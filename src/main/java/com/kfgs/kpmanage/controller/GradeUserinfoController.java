@@ -3,14 +3,13 @@ package com.kfgs.kpmanage.controller;
 
 import com.baomidou.mybatisplus.extension.api.R;
 import com.kfgs.kpmanage.common.controller.BaseController;
+import com.kfgs.kpmanage.entity.response.CommonCode;
+import com.kfgs.kpmanage.entity.response.QueryResponseResult;
 import com.kfgs.kpmanage.service.GradeUserinfoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +71,18 @@ public class GradeUserinfoController extends BaseController {
             e.printStackTrace();
         }
 
+    }
+
+    @ApiOperation(value = "Excel导入",notes = "批量上传人员信息到数据库")
+    @RequestMapping(value = "/upload")
+    public QueryResponseResult upload(@RequestParam("file") MultipartFile file) throws Exception{
+        String name = file.getName();
+        int res = gradeUserinfoService.batchImport(file);
+        if (res == 1){
+            return new QueryResponseResult(CommonCode.SUCCESS,null);
+        }else {
+            return new QueryResponseResult(CommonCode.FAIL,null);
+        }
     }
 
 }

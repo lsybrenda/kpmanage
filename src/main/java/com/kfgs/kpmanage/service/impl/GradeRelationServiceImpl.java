@@ -20,10 +20,18 @@ public class GradeRelationServiceImpl implements GradeRelationService {
     GradeRelationMapper gradeRelationMapper;
 
     @Override
-    @Transactional
     public IPage getRelations(String pageNo, String limit) {
         Page<GradeRelation> page = new Page<>(Long.parseLong(pageNo),Long.parseLong(limit));
         IPage<GradeRelation> iPage = gradeRelationMapper.getRelationList(page);
         return iPage;
     }
+
+    //更新打分关系
+    @Override
+    public int updateRelation(String examiner,String candidate,String type, String groups) {
+
+        int returnbak = gradeRelationMapper.updateRelation(examiner,candidate,type,groups);
+        return returnbak;
+    }
+
 }
