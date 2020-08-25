@@ -113,7 +113,6 @@ public class GradeUserinfoServiceImpl implements GradeUserinfoService {
         //确定版本
         boolean isExcel = file.getOriginalFilename().endsWith("xls")?true:false;
         isExcel = file.getOriginalFilename().endsWith("xlsx")?true:false;
-        List<Map<String,Object>> returnMap;
         if (isExcel){
             //有多少个sheet
             int sheets = workbook.getNumberOfSheets();

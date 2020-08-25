@@ -3,6 +3,7 @@ package com.kfgs.kpmanage.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.kfgs.kpmanage.entity.GradeRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface GradeRelationService {
 
     //删除考核信息
     int deleteRelationInfo(List<GradeRelation> list);
+
+    //导入Excel
+    int batchImport(MultipartFile file) throws Exception;
 }

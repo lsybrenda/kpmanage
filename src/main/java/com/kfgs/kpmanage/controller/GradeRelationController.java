@@ -14,6 +14,7 @@ import com.kfgs.kpmanage.service.GradeUserinfoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -90,6 +91,18 @@ public class GradeRelationController extends BaseController {
         }
         int returnbak = gradeRelationService.deleteRelationInfo(delRelationList);
         if (returnbak == delRelationList.size()){
+            return new QueryResponseResult(CommonCode.SUCCESS,null);
+        }else {
+            return new QueryResponseResult(CommonCode.FAIL,null);
+        }
+    }
+
+    @ApiOperation(value = "Excel导入",notes = "批量上传考核关系到数据库")
+    @RequestMapping(value = "/upload")
+    public QueryResponseResult upload(@RequestParam("file") MultipartFile file) throws Exception{
+        String name = file.getName();
+        int res = gradeRelationService.batchImport(file);
+        if (res == 1){
             return new QueryResponseResult(CommonCode.SUCCESS,null);
         }else {
             return new QueryResponseResult(CommonCode.FAIL,null);

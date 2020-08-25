@@ -7,11 +7,19 @@ import com.kfgs.kpmanage.entity.GradeRelation;
 import com.kfgs.kpmanage.mapper.GradeRelationMapper;
 import com.kfgs.kpmanage.service.GradeRelationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lsy
@@ -58,5 +66,41 @@ public class GradeRelationServiceImpl implements GradeRelationService {
         return res;
     }
 
-
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
+    public int batchImport(MultipartFile file) throws Exception {
+        List<GradeRelation> list = new ArrayList<>();
+        Workbook workbook = null;
+        InputStream inputStream = file.getInputStream();
+        workbook = WorkbookFactory.create(inputStream);
+        //确定版本
+        boolean isExcel = file.getOriginalFilename().endsWith("xls")?true:false;
+        isExcel = file.getOriginalFilename().endsWith("xlsx")?true:false;
+        if (isExcel){
+            //有多少个sheet
+            int sheets = workbook.getNumberOfSheets();
+            Sheet sheet = workbook.getSheetAt(0);
+            //总行数
+            int rowLength = sheet.getLastRowNum()+1;
+            //工作表的列
+            Row row = sheet.getRow(0);
+            //总列数
+            int colLength = row.getLastCellNum();
+            for (int i=1;i<rowLength;i++){
+                row = sheet.getRow(i);
+                GradeRelation gradeRelation = new GradeRelation();
+                gradeRelation.setExaminer(row.getCell(0)==null?"":row.getCell(0).getStringCellValue());
+                gradeRelation.setCandidate(row.getCell(1)==null?"":row.getCell(1).getStringCellValue());
+                gradeRelation.setType(row.getCell(2)==null?"":row.getCell(2).getStringCellValue());
+                gradeRelation.setGroups(row.getCell(3)==null?"":row.getCell(3).getStringCellValue());
+                list.add(gradeRelation);
+            }
+        }
+        int res = gradeRelationMapper.insertMultiRels(list);
+        if (res == list.size()){
+            return 1;
+        }else {
+            return 0;
+        }
+    }
 }
