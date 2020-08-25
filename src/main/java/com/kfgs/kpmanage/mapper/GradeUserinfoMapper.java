@@ -12,4 +12,6 @@ public interface GradeUserinfoMapper extends BaseMapper<GradeUserinfo> {
 
     int insertMultiUsers(List<GradeUserinfo> list);
 
+    String getIdByName(String name);
+
 }

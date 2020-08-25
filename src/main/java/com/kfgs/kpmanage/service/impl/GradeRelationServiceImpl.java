@@ -1,5 +1,6 @@
 package com.kfgs.kpmanage.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kfgs.kpmanage.entity.GradeRelation;
@@ -9,6 +10,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author lsy
@@ -33,5 +36,27 @@ public class GradeRelationServiceImpl implements GradeRelationService {
         int returnbak = gradeRelationMapper.updateRelation(examiner,candidate,type,groups);
         return returnbak;
     }
+
+    @Override
+    public int addRelationInfo(GradeRelation gradeRelation) {
+        return gradeRelationMapper.insert(gradeRelation);
+    }
+
+    @Override
+    @Transactional
+    public int deleteRelationInfo(List<GradeRelation> list) {
+        int res=0;
+        for (int i =0;i<list.size();i++){
+            GradeRelation gradeRelation = list.get(i);
+            QueryWrapper queryWrapper = new QueryWrapper();
+            queryWrapper.eq("examiner",gradeRelation.getExaminer());
+            queryWrapper.eq("candidate",gradeRelation.getCandidate());
+            queryWrapper.eq("type",gradeRelation.getType());
+            queryWrapper.eq("groups",gradeRelation.getGroups());
+            res += gradeRelationMapper.delete(queryWrapper);
+        }
+        return res;
+    }
+
 
 }

@@ -12,6 +12,9 @@ import java.util.List;
  */
 public interface GradeUserinfoService {
 
+    //根据姓名获取ID
+    String getIdByName(String name);
+
     //查询所有人员
     IPage findAllUsers(String name,String pageNo, String limit);
 

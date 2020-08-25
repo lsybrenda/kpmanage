@@ -34,6 +34,15 @@ public class GradeUserinfoServiceImpl implements GradeUserinfoService {
     GradeUserinfoMapper gradeUserinfoMapper;
 
     @Override
+    public String getIdByName(String name) {
+        String id = gradeUserinfoMapper.getIdByName(name);
+        if (id == null || "".equals(id)){
+
+        }
+        return gradeUserinfoMapper.getIdByName(name);
+    }
+
+    @Override
     public IPage findAllUsers(String name,String pageNo, String limit) {
         Page<GradeUserinfo> page = new Page<>(Long.parseLong(pageNo),Long.parseLong(limit));
         QueryWrapper queryWrapper = new QueryWrapper();
