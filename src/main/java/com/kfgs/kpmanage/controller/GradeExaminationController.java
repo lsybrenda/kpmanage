@@ -32,6 +32,8 @@ import java.util.Map;
 @RequestMapping("/examiner")
 public class GradeExaminationController extends BaseController {
 
+    public final static  String WORD_PATH_PREFIX = "static/upload/word";
+
     @Autowired
     GradeExaminationService gradeExaminationService;
 
@@ -63,8 +65,9 @@ public class GradeExaminationController extends BaseController {
     @ApiOperation(value = "解析Word文档")
     @RequestMapping(value = "/getWordContent")
     public void getWordContent() throws FileNotFoundException {
-        File path = new File(ResourceUtils.getURL("classpath:").getPath());;
-        File upload = new File(path.getAbsolutePath(),"static/upload/");
+        File path = new File(ResourceUtils.getURL("classpath:").getPath());
+        String wordPath = new String("src/main/resources/" + WORD_PATH_PREFIX);
+        File upload = new File(wordPath);
         File[] files = upload.listFiles();
         for (int i = 0; i < files.length; i++) {
             File file = files[i];
@@ -77,9 +80,17 @@ public class GradeExaminationController extends BaseController {
      * 获取当前系统路径
      */
     private String getUploadPath(){
+        //构建上传Word文件的存放文件夹路径
         File path = null;
-        try{
-            path = new File(ResourceUtils.getURL("classpath:").getPath());
+        String wordPath = new String("src/main/resources/" + WORD_PATH_PREFIX);
+        path = new File(wordPath);
+        if (!path.exists()){
+            path.mkdirs();
+        }
+        return path.getAbsolutePath();
+        /*try{
+            //path = new File(ResourceUtils.getURL("classpath:").getPath());
+
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }
@@ -90,7 +101,7 @@ public class GradeExaminationController extends BaseController {
         if (!upload.exists()){
             upload.mkdirs();
         }
-        return upload.getAbsolutePath();
+        return upload.getAbsolutePath();*/
     }
 
 

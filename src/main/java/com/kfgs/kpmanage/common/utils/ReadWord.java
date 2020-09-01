@@ -1,20 +1,19 @@
 package com.kfgs.kpmanage.common.utils;
 
 import com.kfgs.kpmanage.entity.GradeExamination;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.POIXMLTextExtractor;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.xmlbeans.XmlException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import java.io.*;
 import java.text.DecimalFormat;
@@ -24,24 +23,24 @@ import java.util.regex.Pattern;
 
 public class ReadWord {
 
+    public final static String EXCEL_PATH_PREFIX = "static/upload/excel/";
     Map<String,String> userMap = NameToID.getNameAndID();
     static int number=0;
     public ReadWord(String filePath){
 
-        String candidate = filePath.substring(0,filePath.indexOf("."));
         String content = "";
         try {
             if (filePath.endsWith(".doc")){
                 InputStream inputStream = new FileInputStream(new File(filePath));
                 WordExtractor extractor = new WordExtractor(inputStream);
                 content = extractor.getText();
-                getContent(candidate,content);
+                getContent(content);
                 extractor.close();
             }else if (filePath.endsWith("docx")){
                 OPCPackage opcPackage = POIXMLDocument.openPackage(filePath);
                 POIXMLTextExtractor extractor = new XWPFWordExtractor(opcPackage);
                 content = extractor.getText();
-                getContent(candidate,content);
+                getContent(content);
                 extractor.close();
             }else {
                 return;
@@ -57,13 +56,15 @@ public class ReadWord {
         }
     }
 
-    private void getContent(String candidate, String text){
+    private void getContent(String text) {
         List<GradeExamination> list = new ArrayList<>();
         GradeExamination gradeExamination = new GradeExamination();
+
         String[] strs = text.split("\n");
         String name = "";
         ArrayList<String> yjmbList = new ArrayList<String>();
         boolean isyjmb = false;
+
         for (int i=0;i<strs.length;i++){
             String line = strs[i];
             if (isyjmb){
@@ -97,70 +98,79 @@ public class ReadWord {
             }
         }
         String userID = userMap.get(name);
-        DecimalFormat decimalFormat = new DecimalFormat("00");
-        String sameworkid = "";
-        String ss = "";
-        for (int i=0;i<yjmbList.size();i++){
-            sameworkid = "";
-            ss = "";
-            String value = yjmbList.get(i).replaceAll("\\s","");
-            if (value.endsWith("】")){
-                ss = value.substring(value.length()-7);
-                sameworkid = ss.substring(1,7);
-                value = value.substring(0,value.length()-7);
-            }
-            Pattern pattern = Pattern.compile("[0-9]*");
-            Matcher isNum = pattern.matcher(value.charAt(0)+"");
-            if (!isNum.matches()){
-                String thisNum = Integer.toString(i+1)+".";
-                value = thisNum.concat(value);
-            }
-            String num = decimalFormat.format(i+1);
-            //获取当前年份
-            Calendar cal = Calendar.getInstance();
-            String year = Integer.toString(cal.get(Calendar.YEAR)) + "A";
-            String exa_id = year + userID + num;
-            System.out.println(exa_id + "    "+ value + "   "+ userID + sameworkid );
 
-            //创建Excel对象
-            HSSFWorkbook workbook = new HSSFWorkbook();
-            //创建工作表单
-            HSSFSheet sheet = workbook.createSheet("个人考核内容");
-            //创建HSSFRow对象
-            HSSFRow row = sheet.createRow(0);
-            //创建单元格，设置表头
-            HSSFCell cell = row.createCell(0);
-            cell.setCellValue("考核条目id");
-            cell = row.createCell(1);
-            cell.setCellValue("考核内容");
-            cell = row.createCell(2);
-            cell.setCellValue("所属员工id");
-            cell = row.createCell(3);
-            cell.setCellValue("相同条目标记");
-
-            writeToExcel(candidate,exa_id,value,userID,sameworkid);
+        //将文件保存到指定位置
+        String excelPath = new String("src/main/resources/" + EXCEL_PATH_PREFIX);
+        String excelName = userID + ".xls";
+        String[] excelTitle = {"考核条目id","考核内容","所属员工id","相同条目标记"};
+        File excel = new File(excelPath+excelName);
+        if (excel.exists()){
+            excel.delete();
         }
+        try {
+            excel.createNewFile();
+            //创建Excel对象
+            WritableWorkbook workbook = Workbook.createWorkbook(excel);
+            //HSSFWorkbook workbook = new HSSFWorkbook();
+            //创建工作表单
+            WritableSheet sheet = workbook.createSheet("个人考核内容",0);
+            Label label = null;
+            //设置列名
+            for (int i=0;i < excelTitle.length;i++){
+                label = new Label(i,0,excelTitle[i]);
+                sheet.addCell(label);
+            }
+            DecimalFormat decimalFormat = new DecimalFormat("00");
+            String sameworkid = "";
+            String ss = "";
+            //获取数据
+            for (int i=0;i<yjmbList.size();i++){
+                sameworkid = "";
+                ss = "";
+                String value = yjmbList.get(i).replaceAll("\\s","");
+                if (value.endsWith("】")){
+                    ss = value.substring(value.length()-7);
+                    sameworkid = ss.substring(1,7);
+                    value = value.substring(0,value.length()-7);
+                }
+                Pattern pattern = Pattern.compile("[0-9]*");
+                Matcher isNum = pattern.matcher(value.charAt(0)+"");
+                if (!isNum.matches()){
+                    String thisNum = Integer.toString(i+1)+".";
+                    value = thisNum.concat(value);
+                }
+                String num = decimalFormat.format(i+1);
+                //获取当前年份
+                Calendar cal = Calendar.getInstance();
+                String year = Integer.toString(cal.get(Calendar.YEAR)) + "A";
+                String exa_id = year + userID + num;
+                System.out.println(exa_id + "    "+ value + "   "+ userID + sameworkid );
+
+                //设值
+                Label labelA = null;
+                Label labelB = null;
+                Label labelC = null;
+                Label labelD = null;
+                labelA = new Label(0,i+1,exa_id);
+                labelB = new Label(1,i+1,value);
+                labelC = new Label(2,i+1,userID);
+                labelD = new Label(3,i+1,sameworkid);
+                sheet.addCell(labelA);
+                sheet.addCell(labelB);
+                sheet.addCell(labelC);
+                sheet.addCell(labelD);
+            }
+            workbook.write();
+            workbook.close();
+            System.out.println("文件"+excelName+"写入完毕");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (RowsExceededException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    /**
-     * 将解析的Word内容写进Excel
-     */
-    public void writeToExcel(String candidate,String exa_id,String value,String userID,String sameworkid){
-
-
-    }
-
-    /*public static void main(String[] args) throws FileNotFoundException {
-        *//*File path = new File(ResourceUtils.getURL("classpath:").getPath());;
-        File upload = new File(path.getAbsolutePath(),"static/upload/");
-        File[] files = upload.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
-            new ReadWord(file.getAbsolutePath());
-            //System.out.println(i);
-        }*//*
-
-        HashMap<String,String> map =new ReadWord("").userMap;
-        //String id = NameToID.gradeUserinfoMapper.getIdByName("马天旗");
-    }*/
 }
