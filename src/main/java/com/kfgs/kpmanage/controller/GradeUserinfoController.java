@@ -26,6 +26,17 @@ public class GradeUserinfoController extends BaseController {
     @Autowired
     GradeUserinfoService gradeUserinfoService;
 
+    @ApiOperation("人员登录")
+    @PostMapping("/userLogin")
+    public QueryResponseResult userLogin(String username,String password){
+        System.out.println(username + password);
+        if (username.equals("admin") && password.equals("111111")){
+            return new QueryResponseResult(CommonCode.SUCCESS,null);
+        }
+        else return new QueryResponseResult(CommonCode.FAIL,null);
+    }
+
+
     @ApiOperation("查询所有人员信息")
     @GetMapping("/findAllUsers")
     public Map findAllUsers(String name,String pageIndex,String pageSize){

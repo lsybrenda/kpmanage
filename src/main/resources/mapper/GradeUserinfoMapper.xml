@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfgs.kpmanage.mapper.GradeUserinfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.kfgs.kpmanage.entity.GradeUserinfo">
+                    <result column="ID" property="id" />
+                    <result column="NAME" property="name" />
+                    <result column="EMAIL" property="email" />
+                    <result column="POSITION" property="position" />
+                    <result column="DEPARTMENT" property="department" />
+                    <result column="ISDAFEN" property="isdafen" />
+                    <result column="HIREDATE" property="hiredate" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            ID, NAME, EMAIL, POSITION, DEPARTMENT, ISDAFEN, HIREDATE
+        </sql>
+
+        <!--批量添加人员信息-->
+        <insert id="insertMultiUsers" parameterType="List">
+            INSERT INTO GRADE_USERINFO
+            (id,name,email,position,department,isdafen,hiredate)
+            select A.*
+            from(
+            <foreach collection="list" item="item" index="index" separator="union all">select
+                #{item.id} ,
+                #{item.name},#{item.email},#{item.position},#{item.department},#{item.isdafen},#{item.hiredate}
+                from dual
+            </foreach>
+            )A
+        </insert>
+
+        <select id="getIdByName" resultType="java.lang.String">
+            select id from GRADE_USERINFO where name =#{name}
+        </select>
+
+        <select id="getNameAndID" resultType="java.util.HashMap">
+            select name,id from GRADE_USERINFO
+        </select>
+
+</mapper>
