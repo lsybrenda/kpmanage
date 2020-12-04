@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kfgs.kpmanage.entity.GradeRelation;
+import com.kfgs.kpmanage.entity.GradeUserinfo;
 import com.kfgs.kpmanage.mapper.GradeRelationMapper;
 import com.kfgs.kpmanage.service.GradeRelationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -34,6 +35,13 @@ public class GradeRelationServiceImpl implements GradeRelationService {
     public IPage getRelations(String pageNo, String limit) {
         Page<GradeRelation> page = new Page<>(Long.parseLong(pageNo),Long.parseLong(limit));
         IPage<GradeRelation> iPage = gradeRelationMapper.getRelationList(page);
+        return iPage;
+    }
+
+    @Override
+    public IPage getCandidates(String pageNo, String limit) {
+        Page<GradeUserinfo> page = new Page<>(Long.parseLong(pageNo),Long.parseLong(limit));
+        IPage<GradeUserinfo> iPage = gradeRelationMapper.getCandidates(page);
         return iPage;
     }
 
@@ -103,4 +111,10 @@ public class GradeRelationServiceImpl implements GradeRelationService {
             return 0;
         }
     }
+
+    /*@Override
+    public List<GradeUserinfo> getCandidateList() {
+        List<GradeUserinfo> list = gradeRelationMapper.getCandidateList();
+        return list;
+    }*/
 }

@@ -22,6 +22,11 @@
         left join grade_userinfo u2 on u2.id=r.candidate
     </select>
 
+    <!--获取被考核人列表 -->
+    <select id="getCandidates" resultType="com.kfgs.kpmanage.entity.GradeUserinfo">
+        select distinct r.candidate as id,u.name,u.email,u.position,u.department,u.isdafen,u.hiredate from  GRADE_USERINFO u,GRADE_RELATION r where r.candidate=u.id
+    </select>
+
     <update id="updateRelation" parameterType="com.kfgs.kpmanage.entity.GradeRelation">
         update grade_relation
         <set>
@@ -44,5 +49,10 @@
         </foreach>
         )A
     </insert>
+
+    <!--获取被考核人列表 -->
+    <select id="getCandidateList" resultType="com.kfgs.kpmanage.entity.GradeUserinfo">
+        select distinct r.candidate as id,u.name,u.email,u.position,u.department,u.isdafen,u.hiredate from  GRADE_USERINFO u,GRADE_RELATION r where r.candidate=u.id
+    </select>
 
 </mapper>

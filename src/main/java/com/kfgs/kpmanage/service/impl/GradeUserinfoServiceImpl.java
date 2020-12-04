@@ -146,4 +146,5 @@ public class GradeUserinfoServiceImpl implements GradeUserinfoService {
             return 0;
         }
     }
+
 }

@@ -5,10 +5,13 @@ import com.alibaba.druid.sql.dialect.oracle.ast.expr.OracleSizeExpr;
 import com.kfgs.kpmanage.common.controller.BaseController;
 import com.kfgs.kpmanage.common.utils.NameToID;
 import com.kfgs.kpmanage.common.utils.ReadWord;
+import com.kfgs.kpmanage.entity.GradeUserinfo;
 import com.kfgs.kpmanage.entity.response.CommonCode;
 import com.kfgs.kpmanage.entity.response.QueryResponseResult;
 import com.kfgs.kpmanage.entity.response.UploadCode;
 import com.kfgs.kpmanage.service.GradeExaminationService;
+import com.kfgs.kpmanage.service.GradeRelationService;
+import com.kfgs.kpmanage.service.GradeUserinfoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +39,25 @@ public class GradeExaminationController extends BaseController {
 
     @Autowired
     GradeExaminationService gradeExaminationService;
+
+    @Autowired
+    GradeUserinfoService gradeUserinfoService;
+
+    @Autowired
+    GradeRelationService gradeRelationService;
+
+
+    @ApiOperation("查询考核信息列表")
+    @GetMapping("/getExamList")
+    public Map getExamList(String pageIndex,String pageSize){
+        Map resultMap = new HashMap();
+        //Map<String, Object> dataTable = getDataTable(gradeExaminationService.getExamList(pageIndex,pageSize));
+        //List<GradeUserinfo> candidateList = gradeRelationService.getCandidateList();
+        Map<String,Object> dataTable = getDataTable(gradeRelationService.getCandidates(pageIndex,pageSize));
+        resultMap.put("data",dataTable);
+        resultMap.put("code",20000);
+        return resultMap;
+    }
 
     @ApiOperation(value = "Word文件上传",notes = "批量上传Word到服务器")
     @RequestMapping(value = "/fileUpload")
@@ -88,20 +110,6 @@ public class GradeExaminationController extends BaseController {
             path.mkdirs();
         }
         return path.getAbsolutePath();
-        /*try{
-            //path = new File(ResourceUtils.getURL("classpath:").getPath());
-
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        if (!path.exists()){
-            path = new File("");
-        }
-        File upload = new File(path.getAbsolutePath(),"static/upload/");
-        if (!upload.exists()){
-            upload.mkdirs();
-        }
-        return upload.getAbsolutePath();*/
     }
 
 
