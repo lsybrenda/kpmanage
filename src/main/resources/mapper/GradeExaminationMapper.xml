@@ -15,5 +15,9 @@
             EXA_ID, EXAMINATIONQUESTIONS, OWNER, SAMEWORK
         </sql>
 
+        <select id="getExamDetail" resultType="com.kfgs.kpmanage.entity.GradeExamination">
+            select * from GRADE_EXAMINATION where owner=#{owner}
+        </select>
+
 
 </mapper>

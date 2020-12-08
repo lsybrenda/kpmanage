@@ -59,6 +59,16 @@ public class GradeExaminationController extends BaseController {
         return resultMap;
     }
 
+    @ApiOperation("根据id查询考核详细信息")
+    @GetMapping("/getExamDetail")
+    public Map getExamDetail(String owner){
+        Map resultMap = new HashMap();
+        List list = gradeExaminationService.getExamDetail(owner);
+        resultMap.put("owner",owner);
+        resultMap.put("examination",list);
+        return resultMap;
+    }
+
     @ApiOperation(value = "Word文件上传",notes = "批量上传Word到服务器")
     @RequestMapping(value = "/fileUpload")
     @Transactional

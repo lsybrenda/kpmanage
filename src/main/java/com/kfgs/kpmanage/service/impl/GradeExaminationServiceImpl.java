@@ -12,6 +12,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author lsy
  */
@@ -24,4 +29,13 @@ public class GradeExaminationServiceImpl implements GradeExaminationService {
     @Autowired
     GradeUserinfoMapper gradeUserinfoMapper;
 
+    @Override
+    public List<GradeExamination> getExamDetail(String owner) {
+        //返回的list
+        List list = new ArrayList();
+        //存放考核信息
+        Map<String,String> map = new HashMap<>();
+        list = gradeExaminationMapper.getExamDetail(owner);
+        return list;
+    }
 }
