@@ -61,10 +61,10 @@ public class GradeExaminationController extends BaseController {
 
     @ApiOperation("根据id查询考核详细信息")
     @GetMapping("/getExamDetail")
-    public Map getExamDetail(String owner){
+    public Map getExamDetail(String id){
         Map resultMap = new HashMap();
-        List list = gradeExaminationService.getExamDetail(owner);
-        resultMap.put("owner",owner);
+        List list = gradeExaminationService.getExamDetail(id);
+        resultMap.put("owner",id);
         resultMap.put("examination",list);
         return resultMap;
     }
