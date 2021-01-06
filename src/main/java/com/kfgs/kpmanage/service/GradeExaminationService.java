@@ -14,4 +14,6 @@ public interface GradeExaminationService{
 
     List<GradeExamination> getExamDetail(String owner);
 
+    int deleteExamById(String[] ids);
+
 }

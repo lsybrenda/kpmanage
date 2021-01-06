@@ -38,4 +38,11 @@ public class GradeExaminationServiceImpl implements GradeExaminationService {
         list = gradeExaminationMapper.getExamDetail(owner);
         return list;
     }
+
+    @Override
+    public int deleteExamById(String[] ids) {
+        //根据id删除考核表信息
+        int rebak = gradeExaminationMapper.deleteByOwner(ids);
+        return rebak;
+    }
 }

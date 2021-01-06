@@ -16,4 +16,6 @@ public interface GradeExaminationMapper extends BaseMapper<GradeExamination> {
 
     List<GradeExamination> getExamDetail(String owner);
 
+    int deleteByOwner(String[] ids);
+
 }

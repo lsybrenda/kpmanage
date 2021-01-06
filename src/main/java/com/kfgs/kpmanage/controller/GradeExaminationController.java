@@ -2,9 +2,13 @@ package com.kfgs.kpmanage.controller;
 
 
 import com.alibaba.druid.sql.dialect.oracle.ast.expr.OracleSizeExpr;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.kfgs.kpmanage.common.controller.BaseController;
 import com.kfgs.kpmanage.common.utils.NameToID;
 import com.kfgs.kpmanage.common.utils.ReadWord;
+import com.kfgs.kpmanage.entity.GradeExamination;
 import com.kfgs.kpmanage.entity.GradeUserinfo;
 import com.kfgs.kpmanage.entity.response.CommonCode;
 import com.kfgs.kpmanage.entity.response.QueryResponseResult;
@@ -67,6 +71,20 @@ public class GradeExaminationController extends BaseController {
         resultMap.put("owner",id);
         resultMap.put("examination",list);
         return resultMap;
+    }
+
+    @ApiOperation("根据id删除某个人的考核表信息")
+    @PostMapping("/deleteExamIds")
+    public QueryResponseResult deleteExamIds(@RequestBody GradeExamination gradeExamination) throws Exception{
+        System.out.println(gradeExamination.getOwner());
+        String[] owners = gradeExamination.getOwner().split(",");
+        int rebak = 0;
+        rebak = gradeExaminationService.deleteExamById(owners);
+        if (rebak != 0){
+            return new QueryResponseResult(CommonCode.SUCCESS,null);
+        }else {
+            return new QueryResponseResult(CommonCode.FAIL,null);
+        }
     }
 
     @ApiOperation(value = "Word文件上传",notes = "批量上传Word到服务器")
