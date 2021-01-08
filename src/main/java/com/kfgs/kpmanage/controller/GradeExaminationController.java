@@ -87,6 +87,34 @@ public class GradeExaminationController extends BaseController {
         }
     }
 
+    @ApiOperation(value = "清空Word文件",notes = "批量清空服务器Word文件")
+    @PostMapping(value = "/wordEmpty")
+    public QueryResponseResult wordEmpty() throws FileNotFoundException {
+        System.out.println("开始清空word文件......");
+        File path = new File(ResourceUtils.getURL("classpath:").getPath());
+        String wordPath = new String("src/main/resources/" + WORD_PATH_PREFIX);
+        File deleteFiles = new File(wordPath);
+        File[] files = deleteFiles.listFiles();
+        int num = files.length;
+        for (int i=0;i<files.length;i++){
+            File file = files[i];
+            String filepath = file.getAbsolutePath();
+            if(file.exists() && file.isFile()){
+                boolean flag = false;
+                flag = file.delete();
+                if (flag){
+                    num -= 1;
+                    System.out.println("删除文件:"+ filepath);
+                    flag = false;
+                }
+            }
+        }
+        if (num == 0){
+            return new QueryResponseResult(CommonCode.SUCCESS,null);
+        }else {
+            return new QueryResponseResult(CommonCode.FAIL,null);
+        }
+    }
     @ApiOperation(value = "Word文件上传",notes = "批量上传Word到服务器")
     @RequestMapping(value = "/fileUpload")
     @Transactional
@@ -113,8 +141,8 @@ public class GradeExaminationController extends BaseController {
     }
 
     @ApiOperation(value = "解析Word文档")
-    @RequestMapping(value = "/getWordContent")
-    public void getWordContent() throws FileNotFoundException {
+    @PostMapping(value = "/getWordContent")
+    public QueryResponseResult getWordContent() throws FileNotFoundException {
         File path = new File(ResourceUtils.getURL("classpath:").getPath());
         String wordPath = new String("src/main/resources/" + WORD_PATH_PREFIX);
         File upload = new File(wordPath);
@@ -122,9 +150,10 @@ public class GradeExaminationController extends BaseController {
         for (int i = 0; i < files.length; i++) {
             File file = files[i];
             String filepath = file.getAbsolutePath();
-            System.out.println(filepath);
+            System.out.println("开始处理："+ filepath);
             ReadWord readWord = new ReadWord(filepath);
         }
+        return new QueryResponseResult(CommonCode.SUCCESS,null);
     }
     /**
      * 获取当前系统路径

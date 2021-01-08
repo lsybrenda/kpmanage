@@ -12,7 +12,6 @@ import org.apache.poi.POIXMLTextExtractor;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.xmlbeans.XmlException;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import java.io.*;
@@ -144,8 +143,7 @@ public class ReadWord {
                 Calendar cal = Calendar.getInstance();
                 String year = Integer.toString(cal.get(Calendar.YEAR)) + "A";
                 String exa_id = year + userID + num;
-                System.out.println(exa_id + "    "+ value + "   "+ userID + sameworkid );
-
+                //System.out.println(exa_id + "    "+ value + "   "+ userID + sameworkid );
                 //设值
                 Label labelA = null;
                 Label labelB = null;

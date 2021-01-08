@@ -69,7 +69,7 @@ public class GradeRelationController extends BaseController {
         }
     }
 
-    @ApiOperation("删除考核信息")
+    @ApiOperation("删除考核关系")
     @PostMapping("/deleteRelationInfo")
     public QueryResponseResult deleteRelationInfo(@RequestBody String params) throws Exception{
         List<GradeRelation> gradeRelations = JSONArray.parseArray(params,GradeRelation.class);
