@@ -6,12 +6,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kfgs.kpmanage.entity.GradeRelation;
 import com.kfgs.kpmanage.entity.GradeUserinfo;
 import com.kfgs.kpmanage.mapper.GradeRelationMapper;
+import com.kfgs.kpmanage.mapper.GradeUserinfoMapper;
 import com.kfgs.kpmanage.service.GradeRelationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +29,9 @@ public class GradeRelationServiceImpl implements GradeRelationService {
 
     @Autowired
     GradeRelationMapper gradeRelationMapper;
+
+    @Autowired
+    GradeUserinfoMapper gradeUserinfoMapper;
 
     @Override
     public IPage getRelations(String pageNo, String limit) {
@@ -74,6 +76,15 @@ public class GradeRelationServiceImpl implements GradeRelationService {
         return res;
     }
 
+    private String getIDbyName(String name) {
+        String id = gradeUserinfoMapper.getIdByName(name);
+        if (id == null || "".equals(id)){
+            return name;
+        }else {
+            return id;
+        }
+    }
+
     @Override
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     public int batchImport(MultipartFile file) throws Exception {
@@ -83,7 +94,7 @@ public class GradeRelationServiceImpl implements GradeRelationService {
         workbook = WorkbookFactory.create(inputStream);
         //确定版本
         boolean isExcel = file.getOriginalFilename().endsWith("xls")?true:false;
-        isExcel = file.getOriginalFilename().endsWith("xlsx")?true:false;
+        //isExcel = file.getOriginalFilename().endsWith("xlsx")?true:false;
         if (isExcel){
             //有多少个sheet
             int sheets = workbook.getNumberOfSheets();
@@ -97,10 +108,16 @@ public class GradeRelationServiceImpl implements GradeRelationService {
             for (int i=1;i<rowLength;i++){
                 row = sheet.getRow(i);
                 GradeRelation gradeRelation = new GradeRelation();
-                gradeRelation.setExaminer(row.getCell(0)==null?"":row.getCell(0).getStringCellValue());
-                gradeRelation.setCandidate(row.getCell(1)==null?"":row.getCell(1).getStringCellValue());
+                gradeRelation.setExaminer(row.getCell(0)==null?"":getIDbyName(row.getCell(0).getStringCellValue()));
+                gradeRelation.setCandidate(row.getCell(1)==null?"":getIDbyName(row.getCell(1).getStringCellValue()));
                 gradeRelation.setType(row.getCell(2)==null?"":row.getCell(2).getStringCellValue());
-                gradeRelation.setGroups(row.getCell(3)==null?"":row.getCell(3).getStringCellValue());
+                if (row.getCell(3) == null){
+                    gradeRelation.setGroups("");
+                }else {
+                    row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+                    gradeRelation.setGroups(row.getCell(3).getStringCellValue());
+                }
+                //gradeRelation.setGroups(row.getCell(3)==null?"":row.getCell(3).getStringCellValue());
                 list.add(gradeRelation);
             }
         }

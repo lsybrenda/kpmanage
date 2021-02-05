@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kfgs.kpmanage.entity.GradeRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.kfgs.kpmanage.entity.GradeUserinfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

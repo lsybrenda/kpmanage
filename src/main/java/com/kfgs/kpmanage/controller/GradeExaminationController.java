@@ -40,6 +40,7 @@ import java.util.Map;
 public class GradeExaminationController extends BaseController {
 
     public final static  String WORD_PATH_PREFIX = "static/upload/word";
+    public final static String EXCEL_PATH_PREFIX = "static/upload/excel";
 
     @Autowired
     GradeExaminationService gradeExaminationService;
@@ -115,6 +116,42 @@ public class GradeExaminationController extends BaseController {
             return new QueryResponseResult(CommonCode.FAIL,null);
         }
     }
+
+    @ApiOperation(value = "下载解析后的Excel文件",notes = "下载解析后的Excel文件")
+    @PostMapping(value = "/excelDownload")
+    public QueryResponseResult excelDownload() {
+        return null;
+    }
+
+    @ApiOperation(value = "清空Excel文件",notes = "批量清空服务器Excel文件")
+    @PostMapping(value = "/excelEmpty")
+    public QueryResponseResult excelEmpty() throws FileNotFoundException {
+        System.out.println("开始清空Excel文件......");
+        File path = new File(ResourceUtils.getURL("classpath:").getPath());
+        String excelPath = new String("src/main/resources/" + EXCEL_PATH_PREFIX);
+        File deleteFiles = new File(excelPath);
+        File[] files = deleteFiles.listFiles();
+        int num = files.length;
+        for (int i=0;i<files.length;i++){
+            File file = files[i];
+            String filepath = file.getAbsolutePath();
+            if(file.exists() && file.isFile()){
+                boolean flag = false;
+                flag = file.delete();
+                if (flag){
+                    num -= 1;
+                    System.out.println("删除文件:"+ filepath);
+                    flag = false;
+                }
+            }
+        }
+        if (num == 0){
+            return new QueryResponseResult(CommonCode.SUCCESS,null);
+        }else {
+            return new QueryResponseResult(CommonCode.FAIL,null);
+        }
+    }
+
     @ApiOperation(value = "Word文件上传",notes = "批量上传Word到服务器")
     @RequestMapping(value = "/fileUpload")
     @Transactional
@@ -168,6 +205,5 @@ public class GradeExaminationController extends BaseController {
         }
         return path.getAbsolutePath();
     }
-
 
 }

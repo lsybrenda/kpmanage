@@ -37,17 +37,18 @@
     </update>
 
     <!--批量添加考核关系-->
-    <insert id="insertMultiRels" parameterType="List">
-        INSERT INTO GRADE_RELATION
-        (examiner,candidate,type,groups)
-        select A.*
-        from(
-        <foreach collection="list" item="item" index="index" separator="union all">select
-            #{item.examiner} ,
-            #{item.candidate},#{item.type},#{item.groups}
+    <insert id="insertMultiRels" parameterType="java.util.List">
+        INSERT INTO GRADE_RELATION(examiner,candidate,type,groups)
+        <foreach collection="list" item="item" index="index" separator="union all">
+            (
+            select
+                #{item.examiner},
+                #{item.candidate},
+                #{item.type},
+                #{item.groups}
             from dual
+            )
         </foreach>
-        )A
     </insert>
 
     <!--获取被考核人列表 -->

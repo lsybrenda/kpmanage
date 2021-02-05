@@ -133,6 +133,7 @@ public class GradeUserinfoServiceImpl implements GradeUserinfoService {
                 gradeUserinfo.setEmail(row.getCell(2)==null?"":row.getCell(2).getStringCellValue());
                 gradeUserinfo.setPosition(row.getCell(3)==null?"":row.getCell(3).getStringCellValue());
                 gradeUserinfo.setDepartment(row.getCell(4)==null?"":row.getCell(4).getStringCellValue());
+                row.getCell(5).setCellType(CellType.STRING);
                 gradeUserinfo.setIsdafen(row.getCell(5)==null?"":row.getCell(5).getStringCellValue());
                 gradeUserinfo.setHiredate(row.getCell(6)==null?"":row.getCell(6).getStringCellValue());
                 ss.add(gradeUserinfo);
