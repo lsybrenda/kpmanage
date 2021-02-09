@@ -26,7 +26,7 @@ public class GradeScoresServiceImpl implements GradeScoresService {
     @Override
     public IPage getCandidates(String pageNo, String limit) {
         Page<GradeUserinfo> page = new Page<>(Long.parseLong(pageNo),Long.parseLong(limit));
-        IPage<GradeUserinfo> iPage = gradeRelationMapper.getCandidates(page);
+        IPage<GradeUserinfo> iPage = gradeRelationMapper.getCandidates(page,"");
         return iPage;
     }
 }

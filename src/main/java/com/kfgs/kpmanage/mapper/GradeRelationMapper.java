@@ -1,5 +1,6 @@
 package com.kfgs.kpmanage.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kfgs.kpmanage.entity.GradeRelation;
@@ -16,7 +17,7 @@ public interface GradeRelationMapper extends BaseMapper<GradeRelation> {
 
     IPage<GradeRelation> getRelationList(IPage<GradeRelation> page);
 
-    IPage<GradeUserinfo> getCandidates(Page<GradeUserinfo> page);
+    IPage<GradeUserinfo> getCandidates(Page<GradeUserinfo> page,@Param("name") String name);
 
     int updateRelation(String examiner,String candidate,String type,String groups);
 

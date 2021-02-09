@@ -41,9 +41,11 @@ public class GradeRelationServiceImpl implements GradeRelationService {
     }
 
     @Override
-    public IPage getCandidates(String pageNo, String limit) {
+    public IPage getCandidates(String pageNo, String limit,String name) {
         Page<GradeUserinfo> page = new Page<>(Long.parseLong(pageNo),Long.parseLong(limit));
-        IPage<GradeUserinfo> iPage = gradeRelationMapper.getCandidates(page);
+        /*QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.like("name",name);*/
+        IPage<GradeUserinfo> iPage = gradeRelationMapper.getCandidates(page,name);
         return iPage;
     }
 

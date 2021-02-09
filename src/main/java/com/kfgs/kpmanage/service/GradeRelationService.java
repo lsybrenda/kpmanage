@@ -17,7 +17,7 @@ public interface GradeRelationService {
     IPage getRelations(String pageNo, String limit);
 
     //获取被考核人列表
-    IPage getCandidates(String pageNo, String limit);
+    IPage getCandidates(String pageNo, String limit,String name);
 
     //更新打分关系
     int updateRelation(String examiner,String candidate,String type,String groups);

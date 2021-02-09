@@ -2,11 +2,8 @@ package com.kfgs.kpmanage.controller;
 
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.kfgs.kpmanage.common.controller.BaseController;
 import com.kfgs.kpmanage.entity.GradeRelation;
-import com.kfgs.kpmanage.entity.GradeUserinfo;
 import com.kfgs.kpmanage.entity.response.CommonCode;
 import com.kfgs.kpmanage.entity.response.QueryResponseResult;
 import com.kfgs.kpmanage.service.GradeRelationService;
