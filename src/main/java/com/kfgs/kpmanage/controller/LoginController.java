@@ -33,10 +33,10 @@ public class LoginController {
         String loginpass = gradeIdentityService.getPasswordByID(userid);
         if (loginpass.equals(password)){
             QueryResult queryResult = new QueryResult();
-            /*map.put("userid",userid);
+            map.put("userid",userid);
             map.put("password",loginpass);
-            queryResult.setMap(map);*/
-            return new QueryResponseResult(CommonCode.SUCCESS,null);
+            queryResult.setMap(map);
+            return new QueryResponseResult(CommonCode.SUCCESS,queryResult);
         }else {
             return new QueryResponseResult(CommonCode.USER_CREDENTIALS_ERROR,null);
         }

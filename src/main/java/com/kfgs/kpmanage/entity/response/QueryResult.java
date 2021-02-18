@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class QueryResult implements Serializable {
+public class QueryResult<T> implements Serializable {
     //数据列表
     private List<T> list;
     //数据总数
