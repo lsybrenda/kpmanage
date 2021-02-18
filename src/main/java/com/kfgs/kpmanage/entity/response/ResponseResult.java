@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @ToString
 @NoArgsConstructor
-public class ResponseResult implements Response {
+public class ResponseResult implements Response{
     //操作是否成功
     boolean success = SUCCESS;
     //操作代码

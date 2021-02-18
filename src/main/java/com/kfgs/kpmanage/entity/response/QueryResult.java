@@ -1,5 +1,6 @@
 package com.kfgs.kpmanage.entity.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.poi.ss.formula.functions.T;
 
 import java.io.Serializable;

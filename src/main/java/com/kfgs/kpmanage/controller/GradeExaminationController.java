@@ -56,8 +56,6 @@ public class GradeExaminationController extends BaseController {
     @GetMapping("/getExamList")
     public Map getExamList(String pageIndex,String pageSize,String name){
         Map resultMap = new HashMap();
-        //Map<String, Object> dataTable = getDataTable(gradeExaminationService.getExamList(pageIndex,pageSize));
-        //List<GradeUserinfo> candidateList = gradeRelationService.getCandidateList();
         Map<String,Object> dataTable = getDataTable(gradeRelationService.getCandidates(pageIndex,pageSize,name));
         resultMap.put("data",dataTable);
         resultMap.put("code",20000);
