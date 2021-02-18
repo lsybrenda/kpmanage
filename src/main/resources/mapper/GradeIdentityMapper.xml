@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kfgs.kpmanage.mapper.GradeIdentityMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.kfgs.kpmanage.entity.GradeIdentity">
+                    <result column="IDNUMBER" property="idnumber" />
+                    <result column="USERID" property="userid" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            IDNUMBER, USERID
+        </sql>
+
+    <select id="selectPassword" resultType="java.lang.String">
+        select password from grade_identity where userid=#{id}
+    </select>
+
+</mapper>
