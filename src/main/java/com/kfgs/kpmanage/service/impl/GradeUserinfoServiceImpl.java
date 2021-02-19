@@ -111,8 +111,8 @@ public class GradeUserinfoServiceImpl implements GradeUserinfoService {
         workbook = WorkbookFactory.create(inputStream);
         //Workbook workbook = new HSSFWorkbook(new POIFSFileSystem(inputStream));
         //确定版本
-        boolean isExcel = file.getOriginalFilename().endsWith("xls")?true:false;
-        isExcel = file.getOriginalFilename().endsWith("xlsx")?true:false;
+        boolean isExcel = (file.getOriginalFilename().endsWith("xls") || file.getOriginalFilename().endsWith("xlsx"))?true:false;
+        //isExcel = file.getOriginalFilename().endsWith("xlsx")?true:false;
         if (isExcel){
             //有多少个sheet
             int sheets = workbook.getNumberOfSheets();
