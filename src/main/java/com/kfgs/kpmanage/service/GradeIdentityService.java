@@ -10,4 +10,6 @@ public interface GradeIdentityService {
 
     String getPasswordByID(String id);
 
+    int userIDJudge(String userid);
+
 }

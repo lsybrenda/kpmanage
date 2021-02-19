@@ -17,4 +17,8 @@
         select password from grade_identity where userid=#{id}
     </select>
 
+    <select id="userIDJudge" resultType="java.lang.Integer">
+        select count (userid) from grade_identity where userid=#{userid}
+    </select>
+
 </mapper>

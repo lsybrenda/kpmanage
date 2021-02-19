@@ -21,4 +21,10 @@ public class GradeIdentityServiceImpl implements GradeIdentityService {
         String password = gradeIdentityMapper.selectPassword(id);
         return password;
     }
+
+    @Override
+    public int userIDJudge(String userid) {
+        int sum = gradeIdentityMapper.userIDJudge(userid);
+        return sum;
+    }
 }
