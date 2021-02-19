@@ -7,6 +7,11 @@ spring:
     username: zljg
     password: zljg123456
     driverClassName: oracle.jdbc.driver.OracleDriver
+
+    #driverClassName: com.mysql.jdbc.Driver
+    #url: jdbc:mysql://172.17.1.56:3306/pogj?useUnicode=true&characterEncoding=UTF-8&allowMutiQueries=true&useAffectedRows=true
+    #username: root
+    #password: root
     initialSize: 5  #初始建立连接数量
     minIdle: 5  #最小连接数量
     maxActive: 20 #最大连接数量
@@ -39,3 +44,5 @@ mybatis-plus:
 #        max-active: 2000
 #        max-wait: 10000
 #    timeout: 0
+
+
